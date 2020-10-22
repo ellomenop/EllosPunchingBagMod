@@ -21,7 +21,7 @@ function EllosPunchingBagMod.List.addValue (list, value)
   list[last] = value
 	list.count = list.count + 1
 	if list.count > list.max then
-		EllosRngMod.List.removeHead(list)
+		EllosPunchingBagMod.List.removeHead(list)
 	end
 end
 
@@ -37,7 +37,7 @@ end
 
 function EllosPunchingBagMod.List.emptyList (list)
 	while list.count > 0 do
-		EllosRngMod.List.removeHead(list)
+		EllosPunchingBagMod.List.removeHead(list)
 	end
 end
 
@@ -138,6 +138,9 @@ function createDpsBar(label, damage, maxDamage, totalDamage, x, y, color)
 	EllosPunchingBagMod.DpsBars["DpsBar" .. label] = dpsBar
 
 	-- Create source name label
+	if string.len(label) >= 18 then
+		label = string.sub(label, 1, 15) .. "..."
+	end
 	CreateTextBox({ Id = dpsBar.Id, Text = label, OffsetX = -30, OffsetY = -1,
 		Font = "AlegreyaSansSCBold", FontSize = 14, Justification = "Right" })
 	ModifyTextBox({ Id = dpsBar.Id, FadeTarget = 1, FadeDuration = 0.0 })
@@ -146,9 +149,11 @@ function createDpsBar(label, damage, maxDamage, totalDamage, x, y, color)
 	SetScaleX({ Id = dpsBar.Id, Fraction = scale, Duration = 0.0 })
 
 	-- Create damage total label
-	CreateTextBox({ Id = dpsBar.Id, Text = damage, OffsetX = 320 * scale - 4, OffsetY = 0,
-		Font = "AlegreyaSansSCBold", FontSize = 10, Justification = "Right", Color = Color.Black })
-	ModifyTextBox({ Id = dpsBar.Id, FadeTarget = 1, FadeDuration = 0.0 })
+	if scale > .06 then
+		CreateTextBox({ Id = dpsBar.Id, Text = damage, OffsetX = 320 * scale - 4, OffsetY = 0,
+			Font = "AlegreyaSansSCBold", FontSize = 10, Justification = "Right", Color = Color.Black })
+		ModifyTextBox({ Id = dpsBar.Id, FadeTarget = 1, FadeDuration = 0.0 })
+	end
 
 	-- Create damage portion percentage label
 	CreateTextBox({ Id = dpsBar.Id, Text = "(" .. math.floor(portion * 100 + .5) .. "%)", OffsetX = 320 * scale + 20, OffsetY = -1,
