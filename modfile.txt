@@ -1,0 +1,2 @@
+:: Ello's Punching Bag Mod v1.0
+Import "Scripts"
