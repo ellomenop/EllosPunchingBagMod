@@ -233,8 +233,7 @@ function calculateDps(list)
 
 	-- Create UI to show DPS bars for each source
 	for i, source in ipairs(sourcesSortedByDamage) do
-		displayName = nameLookup[source] or source
-		createDpsBar(displayName, totalDamageBySource[source], maxDamage, totalDamage, xPos, yPos)
+		createDpsBar(source, totalDamageBySource[source], maxDamage, totalDamage, xPos, yPos)
 		yPos = yPos - 20
 	end
 
@@ -399,12 +398,14 @@ ModUtil.WrapBaseFunction("DamageEnemy", function(baseFunc, victim, triggerArgs)
 			source = "Wall Slam"
 		end
 
-
 		-- if damage source is none of the above, just store it as Unknown
 		if source == nil then
 			source = "Unknown"
 			--print(TableToJSONString(triggerArgs))
 		end
+
+		-- try and match with the name lookup table
+		source = nameLookup[source] or source
 
 		-- finally, put it in the table
 		damageInstance.Source = source
