@@ -59,7 +59,6 @@ local nameLookup = {
 	-- bow
 	DamageShare = "Shared Suffering",
 	-- spear
-	SpearWeaponSpin2 = "Spin",
 	SpearWeaponSpin3 = "Spin (MAX)",
 	SpearWeaponThrowReturn = "Recall",
 	SpearRushWeapon = "Raging Rush",
@@ -81,6 +80,8 @@ local damageBucket = {
 	SpearWeapon3 = "Attack",
 	SpearWeaponThrow = "Special",
 	SpearWeaponDash = "Dash-Strike",
+	SpearWeaponSpin = "Spin",
+	SpearWeaponSpin2 = "Spin",
 	BowWeapon = "Attack",
 	BowSplitShot = "Special",
 	BowWeaponDash = "Dash-Strike",
