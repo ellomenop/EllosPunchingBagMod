@@ -422,6 +422,21 @@ ModUtil.WrapBaseFunction("DoUnlockRoomExits", function(baseFunc, run, room)
 	EllosPunchingBagMod.List.emptyList(EllosPunchingBagMod.DamageHistory)
 end, EllosPunchingBagMod)
 
+ModUtil.WrapBaseFunction("StartRoom", function(baseFunc, run, room)
+    for i, trait in pairs(CurrentRun.Hero.Traits) do
+        getEquippedBoons(trait)
+	end
+    baseFunc(run, room)
+end, EllosPunchingBagMod)
+
+function getEquippedBoons(trait) do
+	slot = trait.Slot or nil
+	name = trait.Name or nil
+	if slot ~= nil and name ~= nil then
+		DebugPrint({Text = slot .. ' / ' .. name})
+	end
+end
+
 -- Set up a polling loop to update our dps calculation
 OnAnyLoad { function()
 	if EllosPunchingBagMod.DpsUpdateThread then return end
@@ -441,3 +456,7 @@ OnAnyLoad { function()
 		end
 	end)
 end }
+
+OnAnyLoad { "StartRoom", function (triggerArgs)
+	DebugPrint({Text = "new room!"})
+end}
