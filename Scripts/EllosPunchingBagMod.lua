@@ -99,9 +99,9 @@ EllosPunchingBagMod.NameLookup = {
 	ThanatosDeathCurseAoE = "Thanatos Rival",
 	ThanatosCurse = "Thanatos Rival",
 	-- falling rocks
-	RubbleFall = "Environmental",
-	RubbleFallElysium = "Environmental",
-	RubbleFallLarge = "Environmental",
+	RubbleFall = "Falling Debris",
+	RubbleFallElysium = "Falling Debris",
+	RubbleFallLarge = "Falling Debris",
 	-- asphodel lava
 	LavaTileWeapon = "Magma",
 	LavaTileTriangle01Weapon = "Magma",
@@ -123,7 +123,7 @@ EllosPunchingBagMod.GodLookup = {
 	Ares = {"Ares' Aid", "Doom", "AresRangedTrait"},
 	Artemis = {"Artemis' Aid", "Support Fire", "Exit Wounds", "ArtemisRangedTrait"},
 	Athena = {"Athena's Aid", "Holy Shield", "AthenaRangedTrait"},
-	Demeter = {"Demeter's Aid", "Arctic Blast", "Snow Burst", "Decay", "Frozen Touch", "DemeterRangedTrait"},
+	Demeter = {"Demeter's Aid", "Arctic Blast", "Snow Burst", "Decay", "Frozen Touch", "DemeterRangedTrait", "DemeterRushTrait"},
 	Dionysus = {"Dionysus' Aid", "Hangover", "DionysusRangedTrait"},
 	Poseidon = {"Rupture", "Breaking Wave", "Poseidon's Aid", "PoseidonRangedTrait"},
 	Zeus = {"Zeus' Aid", "Thunder Flourish", "Splitting Bolt", "Thunder Dash", "Jolted", "Chain Lightning", "Lightning Reflexes", "Heaven's Vengeance", "Thunder Flare", "ZeusRangedTrait"},
@@ -138,22 +138,23 @@ function findColor(source)
 		return {Color.AresDamageLight, Color.White}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Artemis"], source) then
-		return {Color.ArtemisDamage, Color.Black}
+		return {Color.ArtemisDamage, Color.White}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Athena"], source) then
 		return {Color.AthenaDamageLight, Color.White}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Demeter"], source) then
-		return {Color.DemeterDamage, Color.Black}
+		-- demeter's color looks bad on the bars
+		return {{90, 90, 255, 255}, Color.White}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Dionysus"], source) then
 		return {Color.DionysusDamage, Color.White}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Poseidon"], source) then
-		return {Color.PoseidonDamage, Color.Black}
+		return {Color.PoseidonDamage, Color.White}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Zeus"], source) then
-		return {Color.ZeusDamage, Color.Black}
+		return {Color.ZeusDamageLight, Color.Black}
 	end
 	if has_value(EllosPunchingBagMod.GodLookup["Duo"], source) then
 		return {Color.BoonPatchDuo, Color.Black}
@@ -182,11 +183,13 @@ EllosPunchingBagMod.EnemyBucket = {
 	"FreezeShot", -- gorgon stone
 	"SpreadShot",
 	"Bloodless",
+	"RangedBurrower",
 	"Hydra",
 	"SplitShotUnit",
 	"SplitShotWeapon",
 	"ChariotRam",
 	"Shade",
+	"MinotaurTheseus",
 	"Crawler",
 	"HadesBident",
 	"HadesAmmo",
@@ -425,9 +428,6 @@ function getEquippedBoons(trait)
 	if slot == "Ranged" then
 		EllosPunchingBagMod.NameLookup["RangedWeapon"] = name
 	end
-	if slot = "Rush" then
-		EllosPunchingBagMod.NameLookup["Dash"] = name
-	end
 end
 
 --[[
@@ -472,7 +472,6 @@ ModUtil.WrapBaseFunction("DamageEnemy", function(baseFunc, victim, triggerArgs)
 		-- if damage source is none of the above, just store it as Unknown
 		if source == nil then
 			source = "Unknown"
-			--print(TableToJSONString(triggerArgs))
 		end
 
 		-- try and match with the name lookup table
