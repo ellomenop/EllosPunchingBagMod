@@ -7,8 +7,10 @@ Changes from the original:
 - Special is consolidated into a single source
 - Cast, Dash-Strike, Dash-Upper are named as such
 - Traps, Magma, and Environmental (falling rubble) each have their own categories now
-- Enemy Deflect/Charm category is a potpourri of enemy abilities - in general if a source name looked suspiciously like enemy damage it's because it was caused by deflect or charm
+- Enemy Deflect/Charm category is a potpourri of enemy abilities - in general if a source name looked suspiciously like enemy damage it's because it was caused by deflect or charm. Some stuff ends up in here incorrectly.
 
 Known issues:
 - Not all abilities are updated yet
 - Dusa summon tracks as Enemy Deflect/Charm
+- Dragon Rush is displayed as Bull Rush
+- Some other stuff incorrectly shows up as Enemy Deflect/Charm
